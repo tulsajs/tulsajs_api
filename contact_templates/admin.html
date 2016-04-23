@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Really Simple HTML Email Template</title>
+<style>
+/* -------------------------------------
+    GLOBAL
+------------------------------------- */
+* {
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0;
+}
+img {
+  max-width: 600px;
+  width: auto;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+  -webkit-text-size-adjust: none;
+  width: 100% !important;
+}
+/* -------------------------------------
+    ELEMENTS
+------------------------------------- */
+a {
+  color: #348eda;
+}
+.btn-primary {
+  Margin-bottom: 10px;
+  width: auto !important;
+}
+.btn-primary td {
+  background-color: #348eda; 
+  border-radius: 25px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-size: 14px; 
+  text-align: center;
+  vertical-align: top; 
+}
+.btn-primary td a {
+  background-color: #348eda;
+  border: solid 1px #348eda;
+  border-radius: 25px;
+  border-width: 10px 20px;
+  display: inline-block;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 2;
+  text-decoration: none;
+}
+.last {
+  margin-bottom: 0;
+}
+.first {
+  margin-top: 0;
+}
+.padding {
+  padding: 10px 0;
+}
+/* -------------------------------------
+    BODY
+------------------------------------- */
+table.body-wrap {
+  padding: 20px;
+  width: 100%;
+}
+table.body-wrap .container {
+  border: 1px solid #f0f0f0;
+}
+/* -------------------------------------
+    FOOTER
+------------------------------------- */
+table.footer-wrap {
+  clear: both !important;
+  width: 100%;  
+}
+.footer-wrap .container p {
+  color: #666666;
+  font-size: 12px;
+  
+}
+table.footer-wrap a {
+  color: #999999;
+}
+/* -------------------------------------
+    TYPOGRAPHY
+------------------------------------- */
+h1, 
+h2, 
+h3,
+h4 {
+  color: #111111;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 200;
+  line-height: 1.2em;
+  margin: 40px 0 10px;
+}
+h1 {
+  font-size: 36px;
+}
+h2 {
+  font-size: 28px;
+}
+h3 {
+  font-size: 22px;
+}
+p, 
+ul, 
+ol {
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+ul li, 
+ol li {
+  margin-left: 5px;
+  list-style-position: inside;
+}
+/* ---------------------------------------------------
+    RESPONSIVENESS
+------------------------------------------------------ */
+/* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+.container {
+  clear: both !important;
+  display: block !important;
+  Margin: 0 auto !important;
+  max-width: 600px !important;
+}
+/* Set the padding on the td rather than the div for Outlook compatibility */
+.body-wrap .container {
+  padding: 20px;
+}
+/* This should also be a block element, so that it will fill 100% of the .container */
+.content {
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+}
+/* Let's make sure tables in the content area are 100% wide */
+.content table {
+  width: 100%;
+}
+</style>
+</head>
+
+<body bgcolor="#f6f6f6">
+
+<!-- body -->
+<table class="body-wrap" bgcolor="#f6f6f6">
+  <tr>
+    <td></td>
+    <td class="container" bgcolor="#FFFFFF">
+
+      <!-- content -->
+      <div class="content">
+      <img style="margin: 0 auto; text-align:center; display: block;" src="data:image/png;base64,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
+" alt="">
+      <table style='text-align:center;'>
+        <tr>
+          <td>
+            <h2>New message from <%= params.name %> (<%= params.email %>)</h2>
+            <h4><%= params.message %></h4>
+          </td>
+        </tr>
+      </table>
+      </div>
+      <!-- /content -->
+      
+    </td>
+    <td></td>
+  </tr>
+</table>
+<!-- /body -->
+</body>
+</html>
