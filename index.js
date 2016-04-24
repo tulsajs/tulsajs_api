@@ -7,11 +7,18 @@ var bodyParser = require('body-parser');
 var stringify = require('stringify');
 var fetch = require('node-fetch');
 var ejs = require('ejs');
+var wikiScraper = require('github_wiki_scraper');
+var Promise = require('promise');
 
 //constant ENV Variables
 var CONTACT_EMAIL = process.env.CONTACT_EMAIL;
 var ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 var CLIENT_URL = process.env.CLIENT_URL;
+
+//setup array for months
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
  
 stringify.registerWithRequire({
   extensions: ['.txt', '.html'],
@@ -71,6 +78,55 @@ app.post('/subscribe', function (req, res) {
     res.send({error: 'All fields Required!'})
   }
 });
+
+//get events
+app.get('/events', function (req, res) {
+  info = []
+  var date = new Date();
+  var year = monthNames[date.getMonth()] == 'December' ? date.getFullYear() + 1 : date.getFullYear();
+  dates = [
+    {month: monthNames[date.getMonth() - 1], year: date.getFullYear()},
+    {month: monthNames[date.getMonth()], year: date.getFullYear()},
+    {month: monthNames[date.getMonth() + 1], year: year},
+    {month: monthNames[date.getMonth() + 2], year: year}
+  ]
+  dates.forEach(function(date) {
+    var github = {user: 'TulsaJS', repo: 'tulsajs.com', month: date.month, year: date.year}
+    info.push(wikiScraper.getEventsInfo(github))
+  })
+  Promise.all(info).then(function(results){
+    res.json(results)
+  })
+});
+
+//get next-event
+app.get('/next-event', function (req, res) {
+  info = []
+  var date = new Date();
+  var year = monthNames[date.getMonth()] == 'December' ? date.getFullYear() + 1 : date.getFullYear();
+  dates = [
+    {month: monthNames[date.getMonth()], year: date.getFullYear()},
+    {month: monthNames[date.getMonth() + 1], year: year}
+  ]
+  dates.forEach(function(date) {
+    var github = {user: 'TulsaJS', repo: 'tulsajs.com', month: date.month, year: date.year}
+    info.push(wikiScraper.getEventsInfo(github))
+  })
+  Promise.all(info).then(function(results){
+    results = results.filter(result => {
+      return !result.error;
+    });
+
+    if(results.length > 1){
+      date.getDate() > 26 ? res.json(results[1]) : res.json(results[0])
+    } else {
+      res.json(results[0])
+    }
+
+    
+  })
+});
+
 
 //Send user info to SendGrid to create contact
 function sendGridAddContact(req, callback) {
